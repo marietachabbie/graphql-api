@@ -5,13 +5,16 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { schema } from './schema';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 const app = express();
 const httpServer = createServer(app);
 
 /* Create the WebSocket server */
 const wsServer = new WebSocketServer({
   server: httpServer,
-  path: '/graphql',
+  path: '/' + process.env.WS_SERVER_PATH,
 });
 
 /* Set up WebSocket for subscriptions */
@@ -39,7 +42,7 @@ server
   .then(() => {
     server.applyMiddleware({ app });
     httpServer.listen(4000, () => {
-      console.log(`Server ready at http://localhost:4000/graphql`);
+      console.log(`Server ready at ${process.env.GRAPHQL_URL}/${process.env.WS_SERVER_PATH}`);
     });
   })
   .catch(error => {

@@ -79,7 +79,7 @@ const resolvers = {
         const model = getModelStatus(id);
         model.status = 'COMPLETED';
         model.result = 'Mocked Result';
-        
+
         /* Publish the event to subscribers */
         pubsub.publish(MODEL_COMPLETED, { modelCompleted: { id, status: model.status, result: model.result } });
       }, 60000); // Simulates a 1-minute delay for long-running task
